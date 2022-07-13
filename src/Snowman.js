@@ -51,7 +51,7 @@ function Snowman({
     let ltr = evt.target.value;
 
     setGuessedLetters(g => {
-      const newGuessed = new Set(g);
+      const newGuessed = new Set(g); 
       newGuessed.add(ltr);
       return newGuessed;
     });
@@ -76,6 +76,7 @@ function Snowman({
   return (
       <div className="Snowman">
         <img src={(images)[nWrong]} alt={nWrong} />
+        <p className="Snowman-nwrong">Number wrong: {nWrong}</p>
         <p className="Snowman-word">{guessedWord()}</p>
         <p>{generateButtons()}</p>
       </div>
