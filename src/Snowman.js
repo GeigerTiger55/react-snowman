@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { randomWord } from "./words";
 
 import "./Snowman.css";
 import img0 from "./0.png";
@@ -31,7 +32,7 @@ function Snowman({
 
   const [nWrong, setNWrong] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState(() => new Set());
-  const [answer, setAnswer] = useState(words[0]);
+  const [answer, setAnswer] = useState(() => randomWord(words));
 
   /** guessedWord: show current-state of word:
    if guessed letters are {a,p,e}, show "app_e" for "apple"
@@ -70,13 +71,30 @@ function Snowman({
     ));
   }
 
+  /** restartGame: sets state to initial values, selects a new random word
+   * - nWrong = 0
+   * - guessedLetters = new empty Set
+   * - answer = new random word
+   */
+  function restartGame() {
+    setNWrong(0);
+    setGuessedLetters(new Set());
+    setAnswer(randomWord(words));  
+  }
+
   return (
     <div className="Snowman">
-      <img src={images[nWrong]} alt={nWrong} />
+      <img src={(images)[nWrong]} alt={nWrong} />
       <p className="Snowman-nwrong">Number wrong: {nWrong}</p>
-      <p className="Snowman-word">{guessedWord()}</p>
-      {nWrong < maxWrong && <p>{generateButtons()}</p>}
-      {nWrong >= maxWrong && <p>You Lose!</p>}
+      {nWrong < maxWrong && (<div>
+        <p className="Snowman-word">{guessedWord()}</p>
+        <p>{generateButtons()}</p>
+      </div>)}
+      {nWrong >= maxWrong && (<div>
+        <p className="Snowman-word">{answer}</p>
+        <p>You Lose!</p>
+      </div>)}
+      <button onClick={restartGame}>Restart</button>
     </div>
   );
 }

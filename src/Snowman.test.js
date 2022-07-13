@@ -32,4 +32,5 @@ it("ends game after max wrong guesses ", function () {
   fireEvent.click(qButton);
 
   expect(container.querySelector("button[value='a']")).not.toBeInTheDocument();
+  // TODO: add test for you lose.
 });
